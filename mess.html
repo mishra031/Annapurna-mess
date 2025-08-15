@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annapurna Mess - Daily Menu & Reviews</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiSG9zdGVsTWVzcyIsInNob3J0X25hbWUiOiJNZXNzIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmZmZmZmYiLCJ0aGVtZV9jb2xvciI6IiMzYjgyZjYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M00zUnZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQXlOQ0F5TkNJK1BHTnBjbU5zWlNCamVEMGlNVElpSUdONVBTSXhNaUlnY2owaU5DSStQQzlqYVhKamJHVStQQzl6ZG1jKyIsInNpemVzIjoiMjR4MjQiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+    <style>
+        /* 3D Animations and Effects */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; 
+			transform: translateY(20px); }
+            to { opacity: 1; 
+			transform: translateY(0); }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .notification {
+            animation: slideInRight 0.3s ease-out;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* 3D Card Effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .menu-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Floating Animation */
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Pulse Animation */
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+        }
+
+        /* 3D Button Effects */
+        .btn-3d {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-3d:hover {
+            transform: translateY(-3px) rotateX(10deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-3d:active {
+            transform: translateY(0px) rotateX(0deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Star Rating 3D Effects */
+        .star-rating {
+            display: inline-flex;
+            cursor: pointer;
+        }
+        
+        .star {
+            color: #d1d5db;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        
+        .star.filled {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            transform: scale(1.1) rotateY(360deg);
+        }
+        
+        .star:hover,
+        .star.hover {
+            color: #fbbf24;
+            transform: scale(1.2) rotateZ(15deg);
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.7);
+        }
+
+        /* Review Card 3D Effects */
+        .review-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .review-card:hover::before {
+            left: 100%;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Morphing Background */
+        .hero-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particle Effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 8s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        /* Neon Glow Effect */
+        .neon-glow {
+            text-shadow: 
+                0 0 5px currentColor,
+                0 0 10px currentColor,
+                0 0 15px currentColor,
+                0 0 20px #3b82f6,
+                0 0 35px #3b82f6,
+                0 0 40px #3b82f6;
+            animation: neonFlicker 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .ripple:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Tilt Effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+
+        /* Magnetic Effect */
+        .magnetic {
+            transition: transform 0.3s ease;
+        }
+
+        /* Scroll Reveal Animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Food Icons Animation */
+        .food-icon {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .food-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.8));
+        }
+
+        /* Notification Bell Animation */
+        .bell-ring {
+            animation: bellRing 0.5s ease-in-out;
+        }
+
+        @keyframes bellRing {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+
+        /* Success Message 3D */
+        .success-3d {
+            transform: perspective(1000px) rotateX(0deg);
+            animation: successPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: perspective(1000px) rotateX(-90deg) scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: perspective(1000px) rotateX(0deg) scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="text-3xl">🍱</div>
+                    <h1 class="text-2xl font-bold text-gray-800">Annapurna Mess</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#menu" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Menu</a>
+                    <a href="#reviews" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Reviews</a>
+                    <a href="#feedback" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Feedback</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button id="notificationBtn" class="relative p-2 text-gray-600 hover:text-blue-600 transition-all btn-3d">
+                        <span class="text-xl bell-ring">🔔</span>
+                        <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden pulse-glow">0</span>
+                    </button>
+                    <button onclick="showAdminLogin()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium btn-3d ripple">Admin</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg py-20 px-4 relative overflow-hidden">
+        <div class="particles" id="particles"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="float">
+                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 neon-glow">
+                    <span class="food-icon">🍱</span> Welcome to Annapurna Mess <span class="food-icon">🍽️</span>
+                </h2>
+            </div>
+            <p class="text-xl md:text-2xl text-white mb-8 fade-in" style="animation-delay: 0.3s;">
+                Delicious meals, daily menus, and your feedback matters!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center fade-in" style="animation-delay: 0.6s;">
+                <button onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})" class="btn-3d ripple bg-white text-blue-600 px-8 py-4 rounded-xl hover:bg-gray-100 transition-all font-bold text-lg shadow-lg">
+                    <span class="food-icon mr-2">📋</span>View Today's Menu
+                </button>
+                <button onclick="document.getElementById('feedback').scrollIntoView({behavior: 'smooth'})" class="btn-3d ripple border-3 border-white text-white px-8 py-4 rounded-xl hover:bg-white hover:text-blue-600 transition-all font-bold text-lg">
+                    <span class="food-icon mr-2">💬</span>Give Feedback
+                </button>
+            </div>
+        </div>
+        
+        <!-- Floating Food Icons -->
+        <div class="absolute top-20 left-10 text-4xl float" style="animation-delay: 1s;">🍕</div>
+        <div class="absolute top-32 right-20 text-3xl float" style="animation-delay: 2s;">🍔</div>
+        <div class="absolute bottom-20 left-20 text-5xl float" style="animation-delay: 1.5s;">🍜</div>
+        <div class="absolute bottom-32 right-10 text-4xl float" style="animation-delay: 0.5s;">🥗</div>
+        <div class="absolute top-1/2 left-1/4 text-2xl float" style="animation-delay: 3s;">🍛</div>
+        <div class="absolute top-1/3 right-1/3 text-3xl float" style="animation-delay: 2.5s;">🥘</div>
+    </section>
+
+    <!-- Today's Menu Section -->
+    <section id="menu" class="py-16 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Today's Menu</h3>
+                <p id="currentDate" class="text-lg text-gray-600"></p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Breakfast -->
+                <div class="menu-card card-3d rounded-xl p-6 text-white shadow-xl scroll-reveal tilt-card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-3 food-icon">🌅</span>
+                        <h4 class="text-2xl font-bold">Breakfast</h4>
+                    </div>
+                    <div id="breakfastMenu" class="space-y-3">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                    <div class="mt-6 text-sm opacity-90 pulse-glow">
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full">⏰ 7:00 AM - 10:00 AM</span>
+                    </div>
+                </div>
+
+                <!-- Lunch -->
+                <div class="menu-card card-3d rounded-xl p-6 text-white shadow-xl scroll-reveal tilt-card" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-3 food-icon">☀️</span>
+                        <h4 class="text-2xl font-bold">Lunch</h4>
+                    </div>
+                    <div id="lunchMenu" class="space-y-3">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                    <div class="mt-6 text-sm opacity-90 pulse-glow">
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full">⏰ 12:00 PM - 3:00 PM</span>
+                    </div>
+                </div>
+
+                <!-- Dinner -->
+                <div class="menu-card card-3d rounded-xl p-6 text-white shadow-xl scroll-reveal tilt-card" style="animation-delay: 0.4s;">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-3 food-icon">🌙</span>
+                        <h4 class="text-2xl font-bold">Dinner</h4>
+                    </div>
+                    <div id="dinnerMenu" class="space-y-3">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                    <div class="mt-6 text-sm opacity-90 pulse-glow">
+                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full">⏰ 7:00 PM - 10:00 PM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Student Reviews</h3>
+                <p class="text-lg text-gray-600">What our students say about the mess food</p>
+            </div>
+
+            <!-- Add Review Form -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-8">
+                <h4 class="text-xl font-semibold mb-4">Share Your Experience</h4>
+                <form id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input type="text" id="reviewerName" placeholder="Your Name" required class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="text" id="reviewerRoom" placeholder="Room Number (Optional)" class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                        <div class="star-rating" id="starRating">
+                            <span class="star text-2xl" data-rating="1">★</span>
+                            <span class="star text-2xl" data-rating="2">★</span>
+                            <span class="star text-2xl" data-rating="3">★</span>
+                            <span class="star text-2xl" data-rating="4">★</span>
+                            <span class="star text-2xl" data-rating="5">★</span>
+                        </div>
+                    </div>
+                    <textarea id="reviewText" placeholder="Write your review..." required rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4"></textarea>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">Submit Review</button>
+                </form>
+            </div>
+
+            <!-- Reviews Display -->
+            <div id="reviewsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Reviews will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">Feedback & Suggestions</h3>
+                <p class="text-lg text-gray-600">Help us improve our service</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                            <input type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Room Number</label>
+                            <input type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Feedback Category</label>
+                        <select required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Category</option>
+                            <option value="food-quality">Food Quality</option>
+                            <option value="service">Service</option>
+                            <option value="cleanliness">Cleanliness</option>
+                            <option value="timing">Meal Timing</option>
+                            <option value="menu-variety">Menu Variety</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Feedback</label>
+                        <textarea required rows="5" placeholder="Please share your detailed feedback..." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Priority Level</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="priority" value="low" class="mr-2">
+                                <span class="text-green-600">Low</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="priority" value="medium" checked class="mr-2">
+                                <span class="text-yellow-600">Medium</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="priority" value="high" class="mr-2">
+                                <span class="text-red-600">High</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Login Modal -->
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold">Admin Login</h3>
+                <button onclick="closeAdminLogin()" class="text-gray-500 hover:text-gray-700">✕</button>
+            </div>
+            <form id="adminLoginForm" onsubmit="adminLogin(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                        <input type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                <div class="flex space-x-4 mt-6">
+                    <button type="button" onclick="closeAdminLogin()" class="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 transition-colors">Cancel</button>
+                    <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">Login</button>
+                </div>
+            </form>
+            <div class="mt-4 text-sm text-gray-600 text-center">
+                Demo credentials: admin / admin123
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="fixed inset-0 bg-white z-50 hidden overflow-y-auto">
+        <div class="bg-blue-600 text-white p-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold">Admin Panel</h2>
+                <button onclick="logoutAdmin()" class="bg-blue-700 px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors">Logout</button>
+            </div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto p-6">
+            <!-- Admin Navigation -->
+            <div class="flex space-x-4 mb-8 border-b">
+                <button onclick="showAdminTab('menu')" class="admin-tab-btn px-4 py-2 font-medium border-b-2 border-blue-600 text-blue-600">Menu Management</button>
+                <button onclick="showAdminTab('feedback')" class="admin-tab-btn px-4 py-2 font-medium text-gray-600 hover:text-blue-600">Feedback</button>
+                <button onclick="showAdminTab('reviews')" class="admin-tab-btn px-4 py-2 font-medium text-gray-600 hover:text-blue-600">Reviews</button>
+            </div>
+
+            <!-- Menu Management Tab -->
+            <div id="adminMenuTab" class="admin-tab">
+                <h3 class="text-xl font-semibold mb-6">Update Daily Menu</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Breakfast Admin -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="font-semibold mb-4">🌅 Breakfast</h4>
+                        <textarea id="adminBreakfast" rows="6" placeholder="Enter breakfast items (one per line)" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    
+                    <!-- Lunch Admin -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="font-semibold mb-4">☀️ Lunch</h4>
+                        <textarea id="adminLunch" rows="6" placeholder="Enter lunch items (one per line)" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    
+                    <!-- Dinner Admin -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="font-semibold mb-4">🌙 Dinner</h4>
+                        <textarea id="adminDinner" rows="6" placeholder="Enter dinner items (one per line)" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button onclick="updateMenu()" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">Update Menu</button>
+                </div>
+            </div>
+
+            <!-- Feedback Tab -->
+            <div id="adminFeedbackTab" class="admin-tab hidden">
+                <h3 class="text-xl font-semibold mb-6">Student Feedback</h3>
+                <div id="adminFeedbackList">
+                    <!-- Feedback items will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div id="adminReviewsTab" class="admin-tab hidden">
+                <h3 class="text-xl font-semibold mb-6">Student Reviews</h3>
+                <div id="adminReviewsList">
+                    <!-- Reviews will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div id="notificationPanel" class="fixed top-16 right-4 w-80 bg-white rounded-lg shadow-xl border hidden z-40 max-h-96 overflow-y-auto">
+        <div class="p-4 border-b">
+            <h4 class="font-semibold">Notifications</h4>
+        </div>
+        <div id="notificationsList" class="p-4">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50 success-3d">
+        <div class="flex items-center">
+            <span class="text-xl mr-2 food-icon">✓</span>
+            <span id="successText"></span>
+        </div>
+    </div>
+<footer>
+        <span>
+          <a href="#">Tanishka</a> | <span class="far fa-copyright"></span> 2025 All Rights Reserved. Privacy Policy
+        </span>
+       </footer>
+    <script>
+        // Initialize data structures
+        let currentMenu = {
+            breakfast: ['Poha', 'Tea/Coffee', 'Banana', 'Bread & Butter'],
+            lunch: ['Rice', 'Dal', 'Sabzi', 'Roti', 'Pickle'],
+            dinner: ['Rice', 'Rajma', 'Aloo Gobi', 'Roti', 'Salad']
+        };
+
+        let reviews = [
+            {
+                id: 1,
+                name: 'Rahul Kumar',
+                room: 'A-201',
+                rating: 4,
+                text: 'Food quality has improved a lot! Really enjoying the variety.',
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            },
+            {
+                id: 2,
+                name: 'Priya Sharma',
+                room: 'B-105',
+                rating: 5,
+                text: 'Excellent breakfast today. The poha was perfectly cooked!',
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            }
+        ];
+
+        let feedback = [];
+        let notifications = [];
+        let isAdminLoggedIn = false;
+        let selectedRating = 0;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            displayCurrentDate();
+            displayMenu();
+            displayReviews();
+            setupStarRating();
+            setupNotifications();
+            createParticles();
+            setupScrollAnimations();
+            setupTiltEffect();
+            
+            // Register service worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('data:application/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZXZlbnQgPT4geyBldmVudC53YWl0VW50aWwoc2VsZi5za2lwV2FpdGluZygpKTsgfSk7');
+            }
+        });
+
+        // Load data from localStorage
+        function loadData() {
+            const savedMenu = localStorage.getItem('hostelmess_menu');
+            const savedReviews = localStorage.getItem('hostelmess_reviews');
+            const savedFeedback = localStorage.getItem('hostelmess_feedback');
+            const savedNotifications = localStorage.getItem('hostelmess_notifications');
+
+            if (savedMenu) currentMenu = JSON.parse(savedMenu);
+            if (savedReviews) reviews = JSON.parse(savedReviews);
+            if (savedFeedback) feedback = JSON.parse(savedFeedback);
+            if (savedNotifications) notifications = JSON.parse(savedNotifications);
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('hostelmess_menu', JSON.stringify(currentMenu));
+            localStorage.setItem('hostelmess_reviews', JSON.stringify(reviews));
+            localStorage.setItem('hostelmess_feedback', JSON.stringify(feedback));
+            localStorage.setItem('hostelmess_notifications', JSON.stringify(notifications));
+        }
+
+        // Display current date
+        function displayCurrentDate() {
+            const today = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
+        }
+
+        // Display menu
+        function displayMenu() {
+            displayMealItems('breakfastMenu', currentMenu.breakfast);
+            displayMealItems('lunchMenu', currentMenu.lunch);
+            displayMealItems('dinnerMenu', currentMenu.dinner);
+        }
+
+        function displayMealItems(containerId, items) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center py-2 fade-in';
+                itemDiv.style.animationDelay = `${index * 0.1}s`;
+                itemDiv.innerHTML = `
+                    <span class="mr-3 text-yellow-300 food-icon">🍽️</span>
+                    <span class="bg-white bg-opacity-10 px-3 py-1 rounded-full text-sm font-medium">${item}</span>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // Star rating functionality
+        function setupStarRating() {
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach((star, index) => {
+                star.addEventListener('mouseover', () => {
+                    highlightStars(index + 1);
+                });
+                
+                star.addEventListener('click', () => {
+                    selectedRating = index + 1;
+                    setStarRating(selectedRating);
+                });
+            });
+
+            document.getElementById('starRating').addEventListener('mouseleave', () => {
+                setStarRating(selectedRating);
+            });
+        }
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('hover');
+                } else {
+                    star.classList.remove('hover');
+                }
+            });
+        }
+
+        function setStarRating(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                star.classList.remove('hover');
+                if (index < rating) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+            });
+        }
+
+        // Submit review
+        function submitReview(event) {
+            event.preventDefault();
+            
+            if (selectedRating === 0) {
+                showMessage('Please select a rating!');
+                return;
+            }
+
+            const name = document.getElementById('reviewerName').value;
+            const room = document.getElementById('reviewerRoom').value;
+            const text = document.getElementById('reviewText').value;
+
+            const newReview = {
+                id: Date.now(),
+                name: name,
+                room: room || 'Not specified',
+                rating: selectedRating,
+                text: text,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            };
+
+            reviews.unshift(newReview);
+            saveData();
+            displayReviews();
+            
+            // Reset form
+            document.getElementById('reviewForm').reset();
+            selectedRating = 0;
+            setStarRating(0);
+            
+            showMessage('Review submitted successfully!');
+            addNotification('New review submitted', 'A new review has been posted');
+        }
+
+        // Display reviews
+        function displayReviews() {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+
+            reviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card card-3d rounded-lg p-6 shadow-md fade-in tilt-card';
+                reviewCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h5 class="font-semibold text-gray-800">${review.name}</h5>
+                            <p class="text-sm text-gray-600">🏠 ${review.room}</p>
+                        </div>
+                        <div class="flex items-center">
+                            ${generateStars(review.rating)}
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-3">${review.text}</p>
+                    <div class="text-xs text-gray-500 flex items-center">
+                        <span class="food-icon mr-1">📅</span>
+                        ${review.date} at ${review.time}
+                    </div>
+                `;
+                container.appendChild(reviewCard);
+            });
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<span class="text-yellow-400">${i <= rating ? '★' : '☆'}</span>`;
+            }
+            return stars;
+        }
+
+        // Submit feedback
+        function submitFeedback(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const newFeedback = {
+                id: Date.now(),
+                name: formData.get('name') || event.target[0].value,
+                room: formData.get('room') || event.target[1].value,
+                category: event.target[2].value,
+                text: event.target[3].value,
+                priority: formData.get('priority'),
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                status: 'pending'
+            };
+
+            feedback.unshift(newFeedback);
+            saveData();
+            
+            event.target.reset();
+            showMessage('Feedback submitted successfully!');
+            addNotification('New feedback received', `${newFeedback.category} feedback from ${newFeedback.name}`);
+        }
+
+        // Admin functions
+        function showAdminLogin() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.getElementById('adminModal').classList.add('flex');
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('adminModal').classList.add('hidden');
+            document.getElementById('adminModal').classList.remove('flex');
+        }
+
+        function adminLogin(event) {
+            event.preventDefault();
+            
+            const username = event.target[0].value;
+            const password = event.target[1].value;
+            
+            // Demo credentials
+            if (username === 'admin' && password === 'admin123') {
+                isAdminLoggedIn = true;
+                closeAdminLogin();
+                showAdminPanel();
+                showMessage('Admin login successful!');
+            } else {
+                showMessage('Invalid credentials!');
+            }
+        }
+
+        function showAdminPanel() {
+            document.getElementById('adminPanel').classList.remove('hidden');
+            loadAdminData();
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminPanel').classList.add('hidden');
+            showMessage('Logged out successfully!');
+        }
+
+        function showAdminTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-600', 'text-blue-600');
+                btn.classList.add('text-gray-600');
+            });
+            
+            // Show selected tab
+            document.getElementById(`admin${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Tab`).classList.remove('hidden');
+            
+            // Add active class to clicked button
+            event.target.classList.add('border-blue-600', 'text-blue-600');
+            event.target.classList.remove('text-gray-600');
+            
+            // Load specific data
+            if (tabName === 'feedback') loadAdminFeedback();
+            if (tabName === 'reviews') loadAdminReviews();
+        }
+
+        function loadAdminData() {
+            // Load current menu into admin form
+            document.getElementById('adminBreakfast').value = currentMenu.breakfast.join('\n');
+            document.getElementById('adminLunch').value = currentMenu.lunch.join('\n');
+            document.getElementById('adminDinner').value = currentMenu.dinner.join('\n');
+        }
+
+        function updateMenu() {
+            const breakfast = document.getElementById('adminBreakfast').value.split('\n').filter(item => item.trim());
+            const lunch = document.getElementById('adminLunch').value.split('\n').filter(item => item.trim());
+            const dinner = document.getElementById('adminDinner').value.split('\n').filter(item => item.trim());
+            
+            currentMenu = { breakfast, lunch, dinner };
+            saveData();
+            displayMenu();
+            
+            showMessage('Menu updated successfully!');
+            addNotification('Menu Updated', 'Today\'s menu has been updated');
+        }
+
+        function loadAdminFeedback() {
+            const container = document.getElementById('adminFeedbackList');
+            container.innerHTML = '';
+            
+            if (feedback.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-8">No feedback received yet.</p>';
+                return;
+            }
+            
+            feedback.forEach(item => {
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'bg-white border rounded-lg p-4 mb-4 shadow-sm';
+                feedbackDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h5 class="font-semibold">${item.name} (${item.room})</h5>
+                            <span class="text-xs px-2 py-1 rounded-full ${getPriorityColor(item.priority)}">${item.priority}</span>
+                        </div>
+                        <span class="text-sm text-gray-500">${item.date}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2"><strong>Category:</strong> ${item.category}</p>
+                    <p class="text-gray-700 mb-3">${item.text}</p>
+                    <div class="flex space-x-2">
+                        <button onclick="updateFeedbackStatus(${item.id}, 'resolved')" class="text-xs bg-green-100 text-green-800 px-3 py-1 rounded-full hover:bg-green-200">Mark Resolved</button>
+                        <button onclick="deleteFeedback(${item.id})" class="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full hover:bg-red-200">Delete</button>
+                    </div>
+                `;
+                container.appendChild(feedbackDiv);
+            });
+        }
+
+        function loadAdminReviews() {
+            const container = document.getElementById('adminReviewsList');
+            container.innerHTML = '';
+            
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'bg-white border rounded-lg p-4 mb-4 shadow-sm';
+                reviewDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h5 class="font-semibold">${review.name} (${review.room})</h5>
+                            <div class="flex items-center mt-1">
+                                ${generateStars(review.rating)}
+                                <span class="ml-2 text-sm text-gray-600">${review.rating}/5</span>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">${review.date}</span>
+                    </div>
+                    <p class="text-gray-700 mb-3">${review.text}</p>
+                    <button onclick="deleteReview(${review.id})" class="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full hover:bg-red-200">Delete</button>
+                `;
+                container.appendChild(reviewDiv);
+            });
+        }
+
+        function getPriorityColor(priority) {
+            switch(priority) {
+                case 'high': return 'bg-red-100 text-red-800';
+                case 'medium': return 'bg-yellow-100 text-yellow-800';
+                case 'low': return 'bg-green-100 text-green-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        function updateFeedbackStatus(id, status) {
+            const feedbackItem = feedback.find(item => item.id === id);
+            if (feedbackItem) {
+                feedbackItem.status = status;
+                saveData();
+                loadAdminFeedback();
+                showMessage('Feedback status updated!');
+            }
+        }
+
+        function deleteFeedback(id) {
+            feedback = feedback.filter(item => item.id !== id);
+            saveData();
+            loadAdminFeedback();
+            showMessage('Feedback deleted!');
+        }
+
+        function deleteReview(id) {
+            reviews = reviews.filter(review => review.id !== id);
+            saveData();
+            loadAdminReviews();
+            displayReviews();
+            showMessage('Review deleted!');
+        }
+
+        // Notifications
+        function setupNotifications() {
+            document.getElementById('notificationBtn').addEventListener('click', toggleNotifications);
+            updateNotificationBadge();
+        }
+
+        function addNotification(title, message) {
+            const notification = {
+                id: Date.now(),
+                title: title,
+                message: message,
+                time: new Date().toLocaleTimeString(),
+                read: false
+            };
+            
+            notifications.unshift(notification);
+            saveData();
+            updateNotificationBadge();
+            triggerBellAnimation();
+            
+            // Show real-time notification
+            showRealtimeNotification(title, message);
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById('notificationPanel');
+            panel.classList.toggle('hidden');
+            
+            if (!panel.classList.contains('hidden')) {
+                displayNotifications();
+                markNotificationsAsRead();
+            }
+        }
+
+        function displayNotifications() {
+            const container = document.getElementById('notificationsList');
+            container.innerHTML = '';
+            
+            if (notifications.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center">No notifications</p>';
+                return;
+            }
+            
+            notifications.forEach(notification => {
+                const notifDiv = document.createElement('div');
+                notifDiv.className = `p-3 border-b last:border-b-0 ${!notification.read ? 'bg-blue-50' : ''}`;
+                notifDiv.innerHTML = `
+                    <h6 class="font-medium text-sm">${notification.title}</h6>
+                    <p class="text-xs text-gray-600 mt-1">${notification.message}</p>
+                    <span class="text-xs text-gray-500">${notification.time}</span>
+                `;
+                container.appendChild(notifDiv);
+            });
+        }
+
+        function markNotificationsAsRead() {
+            notifications.forEach(notification => {
+                notification.read = true;
+            });
+            saveData();
+            updateNotificationBadge();
+        }
+
+        function updateNotificationBadge() {
+            const badge = document.getElementById('notificationBadge');
+            const unreadCount = notifications.filter(n => !n.read).length;
+            
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function showRealtimeNotification(title, message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification fixed top-20 right-4 bg-blue-600 text-white p-4 rounded-lg shadow-lg z-50 max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-start">
+                    <div class="mr-3">🔔</div>
+                    <div>
+                        <h6 class="font-medium">${title}</h6>
+                        <p class="text-sm opacity-90">${message}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Animation Functions
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        function setupTiltEffect() {
+            document.querySelectorAll('.tilt-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                });
+            });
+        }
+
+        function triggerBellAnimation() {
+            const bell = document.querySelector('.bell-ring');
+            bell.classList.add('bell-ring');
+            setTimeout(() => {
+                bell.classList.remove('bell-ring');
+            }, 500);
+        }
+
+        // Utility functions
+        function showMessage(text) {
+            const message = document.getElementById('successMessage');
+            const messageText = document.getElementById('successText');
+            
+            messageText.textContent = text;
+            message.classList.remove('translate-x-full');
+            
+            setTimeout(() => {
+                message.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            const adminModal = document.getElementById('adminModal');
+            const notificationPanel = document.getElementById('notificationPanel');
+            
+            if (event.target === adminModal) {
+                closeAdminLogin();
+            }
+            
+            if (!event.target.closest('#notificationPanel') && !event.target.closest('#notificationBtn')) {
+                notificationPanel.classList.add('hidden');
+            }
+        });
+
+        // Add some sample notifications on load
+        if (notifications.length === 0) {
+            addNotification('Welcome!', 'Welcome to HostelMess - your digital mess companion');
+            addNotification('Menu Updated', 'Today\'s special: Rajma Rice with fresh salad');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'964b95c5663398f2',t:'MTc1MzQ0NTc1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+
+</script>
+</body>
+</html>
