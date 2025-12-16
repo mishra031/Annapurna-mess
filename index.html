@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,18 +15,14 @@
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             min-height: 100%;
         }
-        
         * {
             box-sizing: border-box;
         }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        /* Header */
-        
         header {
             background: #2c3e50;
             color: #fff;
@@ -35,21 +30,17 @@
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
         .logo {
             font-size: 3rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
         .tagline {
             font-size: 1.2rem;
             opacity: 0.9;
             font-style: italic;
         }
-        /* Navigation */
-        
         nav {
             background: #34495e;
             padding: 1rem 0;
@@ -57,14 +48,12 @@
             top: 0;
             z-index: 100;
         }
-        
         .nav-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 2rem;
         }
-        
         .nav-link {
             color: #fff;
             text-decoration: none;
@@ -73,18 +62,14 @@
             transition: all 0.3s ease;
             font-weight: 500;
         }
-        
         .nav-link:hover,
         .nav-link.active {
             background: #e74c3c;
             transform: translateY(-2px);
         }
-        /* Main Content */
-        
         main {
             padding: 3rem 0;
         }
-        
         .section {
             margin-bottom: 4rem;
             background: #fff;
@@ -95,12 +80,10 @@
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
-        
         .section.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
         .section-title {
             font-size: 2.5rem;
             color: #2c3e50;
@@ -108,7 +91,6 @@
             margin-bottom: 2rem;
             position: relative;
         }
-        
         .section-title::after {
             content: '';
             display: block;
@@ -118,14 +100,11 @@
             margin: 1rem auto;
             border-radius: 2px;
         }
-        /* Weekly Menu */
-        
         .weekly-menu {
             display: grid;
             gap: 3rem;
             margin-top: 2rem;
         }
-        
         .day-menu {
             background: #fff;
             border-radius: 20px;
@@ -133,13 +112,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border-left: 6px solid #e74c3c;
             transition: all 0.3s ease;
-        }
-        
+        }   
         .day-menu:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-        
+        }        
         .day-title {
             font-size: 2rem;
             color: #2c3e50;
@@ -147,54 +124,45 @@
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 2px solid #ecf0f1;
-        }
-        
+        }       
         .meals-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-        }
-        
+        }        
         .meal-category {
             padding: 1.5rem;
             border-radius: 15px;
             transition: all 0.3s ease;
-        }
-        
+        }        
         .meal-category.breakfast {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             border: 2px solid #ff9a56;
-        }
-        
+        }        
         .meal-category.lunch {
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
             border: 2px solid #48cae4;
-        }
-        
+        }       
         .meal-category.dinner {
             background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
             border: 2px solid #9d4edd;
-        }
-        
+        }        
         .meal-category:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        
+        }        
         .meal-category h4 {
             font-size: 1.4rem;
             color: #2c3e50;
             margin-bottom: 1rem;
             text-align: center;
             font-weight: bold;
-        }
-        
+        }        
         .menu-items {
             list-style: none;
             padding: 0;
             margin: 0;
-        }
-        
+        }       
         .menu-items li {
             padding: 0.6rem 0;
             border-bottom: 1px solid rgba(44, 62, 80, 0.1);
@@ -202,63 +170,51 @@
             color: #34495e;
             font-weight: 500;
             transition: all 0.2s ease;
-        }
-        
+        }        
         .menu-items li:last-child {
             border-bottom: none;
-        }
-        
+        }        
         .menu-items li:hover {
             color: #e74c3c;
             padding-left: 10px;
-        }
-        /* About Section */
-        
+        }       
         .about-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             align-items: center;
-        }
-        
+        }        
         .about-text {
             font-size: 1.1rem;
             color: #555;
             line-height: 1.8;
-        }
-        
+        }        
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
-        }
-        
+        }        
         .feature {
             text-align: center;
             padding: 1.5rem;
             background: #f8f9fa;
             border-radius: 10px;
             transition: all 0.3s ease;
-        }
-        
+        }       
         .feature:hover {
             background: #e9ecef;
             transform: translateY(-5px);
-        }
-        
+        }        
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
-        }
-        /* Contact Section */
-        
+        }        
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-        }
-        
+        }        
         .contact-card {
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             padding: 2rem;
@@ -266,8 +222,7 @@
             text-align: center;
             color: #2c3e50;
             transition: all 0.3s ease;
-        }
-        
+        }       
         .contact-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
